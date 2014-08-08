@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="com.netand.urqa"
+    version="0.0.1">
+        
+	<name>Urqa</name>
+
+	<asset src="www/js/hello.js" target="js/stacktrace.js" />
+	
+	<platform name="android">
+
+		<config-file target="res/xml/config.xml" parent="/cordova/plugins">
+			<feature name="UrqaPlugin">
+        		<param name="android-package" value="com.netand.urqa.UrqaPlugin" />
+    		</feature>
+		</config-file>
+		        
+		<source-file src="src/" target-dir="src/" />
+		<source-file src="libs/UrQA-Client_0.95.jar" target-dir="libs/" />
+		
+    </platform>
+
+</plugin>

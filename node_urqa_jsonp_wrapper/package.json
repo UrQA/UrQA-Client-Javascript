@@ -1,0 +1,12 @@
+{
+  "name": "UrQAforWEBTest",
+  "private": true,
+  "version": "0.0.1",
+  "description": "UrQA for WEB Test ",
+  "author": "Seo ByeongSeon <famersbs@gmail.com>",
+  "dependencies": {
+    "express": "3.2.4",
+    "node-rest-client": "",
+    "dateformat":""
+  }
+}
