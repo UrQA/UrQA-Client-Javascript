@@ -8,7 +8,8 @@
 
 	<script type="text/javascript" src="lib/stacktrace/stacktrace.js" ></script>
 	<script type="text/javascript" src="lib/urqa/dateformat.js" ></script>
-	<script type="text/javascript" src="lib/urqa/urqaclient.js" ></script>
+	<script type="text/javascript" src="lib/urqa/urqa_core.js" ></script>
+	<script type="text/javascript" src="lib/urqa/urqa_web.js" ></script>
 </head>
 <body>
 	<div>
@@ -18,7 +19,9 @@
 	</div>
 
 	<script type="text/javascript" >
-		urqa.init( "10EB2BF7", "1.1", "/urqa_wrapper" );
+
+		// Init urqa
+		urqa.Init( { api_key: '10Eb2BF7', app_version:"1.1", wrap_url:'/urqa_wrapper'} );
 
 		function test_sendexception(){
 			try{
@@ -28,7 +31,7 @@
 				test.aaa();
 
 			}catch( err ){
-				urqa.send_exception( err );
+				urqa.send_e( err, { errname: "hhh test error", rank : 0,  tag: "ttttt" } );
 			}
 		}
 	</script>

@@ -38,14 +38,46 @@ public class UrqaPlugin extends CordovaPlugin {
 		URQAController.InitializeAndStartSession( activity.getApplicationContext(), apikey );
 	}
 
+	/**
+	 * [convertToRank description]
+	 * @param  rank_str [description]
+	 * @return          [description]
+	 */
+	private ErrorRank convertToRank( String rank_str ){
+
+		int rank = Integer.parseInt( rank_str );
+	
+		switch( rank ){
+			case 0:
+				return ErrorRank.Unhandle;
+			case 1:
+				return ErrorRank.Native;
+			case 2:
+				return ErrorRank.Critical;
+			case 3:
+				return ErrorRank.Major;
+			default:
+				return ErrorRank.Nothing;
+		}
+	}
+
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 
-		if( action.equals("test_exception") ){
+		if( action.equals("exception") ){
 
 			String title = args.getString(0);
 			String stacktrace = args.getString(1);
+
+			String errname 		= args.getString(2);
+			String rank_str 	= args.getString(3);
+			String tag 			= args.getString(4);
+			int    rank 		= 2;
+
+			if(errname == null ) 		errname = "";
+			if( rank_str == null ) 		rank_str = "2";
+			if(tag == null )			tag = "";
 			
-			URQAController.SendException(new UrqaException(title, stacktrace) , "test", ErrorRank.Major);
+			URQAController.SendException(new UrqaException(title, stacktrace) , tag, convertToRank( rank_str ) );
 			
 			callbackContext.success("Success");
 			return true;

@@ -42,44 +42,27 @@ install_cordova.sh [project root]
 <script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
 <script type="text/javascript" src="js/stacktrace/stacktrace.js"></script>
-<script type="text/javascript" src="js/urqaplugin.js"></script>
+<script type="text/javascript" src="js/urqa/urqa_core.js"></script>
+<script type="text/javascript" src="js/urqa/urqa_cordova.js"></script>
+
 <script type="text/javascript">
-
-    //var cordova = require('cordova');
-    //cordova.exec = cordova.exec || require('cordova/exec');
-    
-    var writelog = function( log_msg ){
-        document.getElementById("test_log").value = log_msg;
-    };
-
-    writelog( "zero" );
 
     app.initialize();
 
-    writelog( "first " + cordova );
-
-    var urqa = createUrqa();
-    
-    writelog( "second " + urqa.send_error );
     function ttt(){
         try{
             var te = null;
             te.toString();
         }catch(err){
-            urqa.send_error( err );    
+            urqa.send_e( err, { errname: "hhh test error", rank : 0,  tag: "cordova" } );    
         }
     };
-
-    ttt();
-
     function ttt2(){
-        urqa.send_msg( "This is Test Msg" );
+        urqa.send_l( "This is Test Msg", { errname: "hhh test error", rank : 1,  tag: "cordova" }  );
     }
 
+    ttt();
     ttt2();
-
-    writelog( "end ");
-
 </script>
 ```
 

@@ -5,10 +5,10 @@
  브라우져 종료도 인지 해야 하고... ^^;;
  쿠키를 사용해서 세션 유지도 확인 해야 하고 ~~ 할일이 많구만 ~~!
 */
-var urqa = function( ){
-	//http://ur-qa.com/urqa/
-	//var URQA_URL = "http://www.urqa.io";
+var urqa_web = function( ){
+	
 	var URQA_URL = "http://ur-qa.com";
+	//var URQA_URL = "http://www.urqa.io";
 	//var URQA_URL = "http://125.209.194.101:49999";
 	var api_key = "";
 	var version= "";
@@ -17,22 +17,54 @@ var urqa = function( ){
 
 	var ret = {};
 
-	// Translate to send type
-	var converToJavaTypeException = function( trace ){
-		var ret = trace.join('\\n\\t');
-		try{
-			var msg = "";
-			for( var i in trace ){
-				var tmp = trace[i].split('@');
-				tmp[0] = tmp[0].replace( '()', '' );
-				msg = msg + '\\tat ' + tmp[0] + '(' + tmp[1] + ')' + '\\n';
-			}
-			return msg;
-		}catch(err){}
+	/**
+	 * init
+	 * @param {[type]} init_value [description]
+	 */
+	ret.Init = function( init_value ){
+		api_key 		= init_value.api_key;
+		version 		= init_value.app_version;
+		wrapping_server = init_value.wrap_url;
 
-		return ret;
+		// Load Browser Information ( add event )
+		// 	screen size
+		// 	Browser version
+		// 	etc...
+	}
+
+
+	/**
+	 * thorow exception 
+	 * 
+	 * @param  {error}  error            exception error object
+	 * @param  {object} additional_info  { errname:string, rank:int, tag:string }
+	 * @return {none}
+	 */
+	ret.send_e = function( error, additional_info ){
+
+		/*
+		{ errname:string, rank:int, tag:string }
+		 */
+
+		send_exception( error.replace(/\n/g, '\\n').replace(/\t/g, '\\t' ),
+							additional_info.errname,
+							additional_info.rank,
+							additional_info.tag
+							 );
+
 	};
 
+	/**
+	 * send log to urqa
+	 * 
+	 * @param  {String} log_text        [description]
+	 * @param  {object} additional_info [description]
+	 * @return {none}                 
+	 */
+	ret.send_l = function( log_text, additional_info ){
+
+		
+	}
 
 	var callUrQA = function( uri, data ){
 
@@ -60,59 +92,32 @@ var urqa = function( ){
 
 	};
 
-	// createSession
-	var linkToUrQAServer = function( ) {
-		var url = URQA_URL + "/urqa/client/connect";
-		var reqobj = '{"apikey":"' + api_key + '", "appversion":"'+version+'"}' ;
-		callUrQA( url, reqobj );
-	};
-
-
-	// 초기화
-	/**
-	 *
-	 * @param _apikey
-	 * @param _version
-	 * @param _wrapping_server
-	 */
-	ret.init = function( _apikey, _version, _wrapping_server ){
-		api_key = _apikey;
-		version = _version;
-
-		if( !( _wrapping_server == null || _wrapping_server == undefined ) ){
-			wrapping_server = _wrapping_server;
-		}
-
-		linkToUrQAServer();
-	};
 
 	// Exception 전송
-	ret.send_exception = function( err ){
-		var trace = printStackTrace({e: err});
-		//console.log(converToJavaTypeException( trace ));
-		var trace_log = converToJavaTypeException( trace );
+	function send_exception( err, errorname, rank, tag ){
 
+		// value init
+		errorname = errorname || err;
+		rank = rank || 2;
+		tag = tag || '';
+	
 		var now = new Date();
 		var now_date_string = now.format("yyyy-mm-dd HH:MM:ss");
 		var utc_now = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),  now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds());
-
-		console.log("Current Date : " + now_date_string + " "+ utc_now.getTime() );
-
-		console.log( trace );
 
 		var url = URQA_URL + "/urqa/client/send/exception";
 		var reqobj = '{' +
 						'"exception": { ' +
 							'"sdkversion": "0.95", '+  	// 나중에 브라우져 버전? 
 							'"locale": "English", ' +
-							'"tag": "", '+
-							'"rank": 2, '+
-							'"callstack": "' + trace_log +'", '+
+							'"tag": "'+tag+'", '+
+							'"rank": '+rank+', '+
+							'"callstack": "' + err +'", '+
 							'"apikey": "'+api_key+'", '+
 							'"datetime": "'+now_date_string+'", '+
 							'"device": "Android SDK built for x86", '+
 							'"country": "US", '+ //지역
-							'"errorname": "' + trace_log + '", '+
+							'"errorname": "' + errorname + '", '+
 							'"errorclassname": "unknown", '+
 							'"linenum": 0, '+
 							'"appversion": "' + version + '",  '+		// Android Application App Version
@@ -150,4 +155,7 @@ var urqa = function( ){
 
 	return ret;
 
-}();
+};
+
+// Add to Urqa
+urqa.setEnvObj( urqa_web() );

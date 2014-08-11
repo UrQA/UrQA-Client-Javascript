@@ -16,7 +16,7 @@ public class UrqaException extends Exception {
 
 	@Override
 	public void printStackTrace(PrintWriter s){
-		s.println("UrqaException " + title /*+" "+ stacktrace */ + " :");
+		s.println("UrqaException " + title + " :");
 		s.println(stacktrace);
 		s.flush();
 	}
