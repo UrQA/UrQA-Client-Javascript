@@ -11,6 +11,12 @@ server.configure(function(){
     server.use(express.bodyParser());
 });
 
+server.get( '/getheader' , function( req, res ) {
+
+	var header = req.header( 'user-agent' );
+
+});
+
 server.get( '/urqa_wrapper', function( req, res ){
 
 	//console.log('params: ' + JSON.stringify(req.params));

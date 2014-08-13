@@ -40,3 +40,9 @@ UrQA Client Javascript
 
 	web
 		: node_urqa_jsonp_wrapper/public/index.html
+
+
+# use open source
+
+browser.js 		: https://github.com/ded/bowser
+Stacktrace.js 	: http://stacktracejs.com/

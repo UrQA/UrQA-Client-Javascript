@@ -7,6 +7,7 @@
 	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js" ></script>
 
 	<script type="text/javascript" src="lib/stacktrace/stacktrace.js" ></script>
+	<script type="text/javascript" src="lib/browser/browser.js" ></script>
 	<script type="text/javascript" src="lib/urqa/dateformat.js" ></script>
 	<script type="text/javascript" src="lib/urqa/urqa_core.js" ></script>
 	<script type="text/javascript" src="lib/urqa/urqa_web.js" ></script>
@@ -33,6 +34,8 @@
 			}catch( err ){
 				urqa.send_e( err, { errname: "hhh test error", rank : 0,  tag: "ttttt" } );
 			}
+
+			test.aaa();
 		}
 	</script>
 </body>

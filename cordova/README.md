@@ -66,6 +66,3 @@ install_cordova.sh [project root]
 </script>
 ```
 
-#Links
-
-Stacktrace.js : http://stacktracejs.com/

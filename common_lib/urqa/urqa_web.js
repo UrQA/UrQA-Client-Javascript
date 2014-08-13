@@ -14,8 +14,37 @@ var urqa_web = function( ){
 	var version= "";
 	var session_key = "";
 	var wrapping_server = null;
+	var browser = null;
+	var l_lang = 'en';
+	var country = 'US';
 
 	var ret = {};
+
+	/**
+	 *
+	 * Browser Screen size getter~!
+	 * @return  return brwoser.x
+	 */
+	var getBrowserSize = function(){
+		var b = {};
+
+		try{
+			var w = window,
+			    d = document,
+			    e = d.documentElement,
+			    g = d.getElementsByTagName('body')[0],
+			    x = w.innerWidth || e.clientWidth || g.clientWidth,
+			    y = w.innerHeight|| e.clientHeight|| g.clientHeight;
+
+			b.x = x;
+			b.y = y;
+		}catch( err ){
+			b.x = 0;
+			b.y = 0;
+		}
+
+		return b;
+	};
 
 	/**
 	 * init
@@ -27,9 +56,38 @@ var urqa_web = function( ){
 		wrapping_server = init_value.wrap_url;
 
 		// Load Browser Information ( add event )
-		// 	screen size
-		// 	Browser version
+		// 	V screen size
+		// 	V Browser version
+		// 	V locale
 		// 	etc...
+		browser = getBrowser();
+
+		// get locale
+		if (navigator.userLanguage) // Explorer
+			l_lang = navigator.userLanguage;
+		else if (navigator.language) // FF
+			l_lang = navigator.language;
+		else
+		    l_lang = "en-US";
+
+		if(l_lang.length > 5 ){
+			country = l_lang.substring( 3 );
+		}
+		
+		// add global event
+		var before_onerror = window.onerror;
+		window.onerror = function(exception, url, line, column, errorobj) {
+			urqa.send_e( errorobj, { errname: "Global Exception" }  );
+
+			try{
+				if( undefined != before_onerror && null == before_onerror ){
+					return before_onerror( exception, url, line, column, errobj );
+				}
+			}catch(err){}
+
+		    return false;
+		};
+
 	}
 
 
@@ -100,6 +158,8 @@ var urqa_web = function( ){
 		errorname = errorname || err;
 		rank = rank || 2;
 		tag = tag || '';
+
+		var b = getBrowserSize();
 	
 		var now = new Date();
 		var now_date_string = now.format("yyyy-mm-dd HH:MM:ss");
@@ -109,40 +169,40 @@ var urqa_web = function( ){
 		var reqobj = '{' +
 						'"exception": { ' +
 							'"sdkversion": "0.95", '+  	// 나중에 브라우져 버전? 
-							'"locale": "English", ' +
+							'"locale": "'+l_lang+'", ' +
 							'"tag": "'+tag+'", '+
 							'"rank": '+rank+', '+
 							'"callstack": "' + err +'", '+
 							'"apikey": "'+api_key+'", '+
 							'"datetime": "'+now_date_string+'", '+
-							'"device": "Android SDK built for x86", '+
-							'"country": "US", '+ //지역
+							'"device": "'+browser.name +' ' +browser.version +'", '+
+							'"country": "'+country+'", '+ //지역
 							'"errorname": "' + errorname + '", '+
-							'"errorclassname": "unknown", '+
+							'"errorclassname": "'+errorname+'", '+
 							'"linenum": 0, '+
 							'"appversion": "' + version + '",  '+		// Android Application App Version
-							'"osversion": "L", '+ 	// 나중엔 브라우져?? 버전
+							'"osversion": "'+browser.version+'", '+ 	// 나중엔 브라우져?? 버전
 							'"gpson": 0, '+ // GPS on(value 1), off(value 0) 
 							'"wifion": 1, '+ // WiFi on(value 1), off(value 0) 
 							'"mobileon": 0, '+ // MobileNetwor(3G) on(value 1), off(value 0) 
-							'"scrwidth": 320, '+ 
-							'"scrheight": 432, '+ 
+							'"scrwidth": '+b.x+', '+ 
+							'"scrheight": '+b.y+', '+ 
 							'"batterylevel": 50, '+
 							'"availsdcard": 0, '+
 							'"rooted": 0, '+
-							'"appmemtotal": 3, '+ // iOS Memory total
-							'"appmemfree": 47, '+ // iOS Memory free
-							'"appmemmax": 48, '+ // iOS Memory usage
-							'"kernelversion": "3.4.0+", '+ 
-							'"xdpi": 160, '+ 
-							'"ydpi": 160, '+ 
+							'"appmemtotal": 0, '+ // iOS Memory total
+							'"appmemfree": 0, '+ // iOS Memory free
+							'"appmemmax": 0, '+ // iOS Memory usage
+							'"kernelversion": "'+browser.version+'", '+ 
+							'"xdpi": '+b.x+', '+ 
+							'"ydpi": '+b.y+', '+ 
 							'"scrorientation": 0, '+ 
 							'"sysmemlow": 0, '+ 
-							'"lastactivity": "com.netand.hiauth.mobileotpv2.LogoActivity", ' +
+							'"lastactivity": "it.is.browser", ' +
 							'"eventpaths": [] '+
 						'},' +
 						'"console_log" : { '+
-							'"data" : "This is Test Message" '+ // Android Console Log
+							'"data" : "--" '+ // Android Console Log
 						'}, ' + 
 						'"instance": { ' +
         					'"id": ' + utc_now.getTime() + ' ' +
