@@ -10,6 +10,8 @@ var urqa = function( ){
 	 */
 	var env_obj = null;
 
+	var consoleLogObj = null;
+
 
 	var ret = {};
 
@@ -20,9 +22,14 @@ var urqa = function( ){
 	 *        .api_key		= api key ( common )
 	 *        .app_version 	= app version ( common )
 	 *        .wrap_url		= wrap url ( web )
+	 *        .console_debug_enable = ( web )
 	 */
 	ret.Init = function( init_value ){
 		env_obj.Init( init_value );
+
+		if(init_value.console_debug_enable){
+			consoleLogObj.enable( true );
+		}
 	}
 
 	/**
@@ -31,6 +38,18 @@ var urqa = function( ){
 	ret.setEnvObj = function( _env_obj ){
 		env_obj = _env_obj;
 		// check ~!
+	};
+
+
+	/**
+	 * console obj 
+	 *
+	 * log memoryer
+	 * 
+	 * @param {[type]} _console_obj [description]
+	 */
+	ret.setConsoleLogObj = function( _console_obj ){
+		consoleLogObj = _console_obj;
 	};
 
 
@@ -100,6 +119,14 @@ var urqa = function( ){
 		//additional_info.errname = additional_info.errname || 'untitle';
 		additional_info.rank = additional_info.rank || 2;
 		additional_info.tag = additional_info.tag || '';
+
+		// add logs
+		if( consoleLogObj ) {
+			additional_info.logs = consoleLogObj.getLogs();
+		}else{
+			additional_info.logs = [];
+		}
+
 		return additional_info;
 	}
 

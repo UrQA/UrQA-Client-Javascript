@@ -107,7 +107,8 @@ var urqa_web = function( ){
 		send_exception( error.replace(/\n/g, '\\n').replace(/\t/g, '\\t' ),
 							additional_info.errname,
 							additional_info.rank,
-							additional_info.tag
+							additional_info.tag,
+							additional_info.logs
 							 );
 
 	};
@@ -151,8 +152,16 @@ var urqa_web = function( ){
 	};
 
 
-	// Exception 전송
-	function send_exception( err, errorname, rank, tag ){
+	/**
+	 * [send_exception description]
+	 * @param  {[type]} err       [description]
+	 * @param  {[type]} errorname [description]
+	 * @param  {[type]} rank      [description]
+	 * @param  {[type]} tag       [description]
+	 * @param  {[type]} logs      Array[String]
+	 * @return {[type]}           [description]
+	 */
+	function send_exception( err, errorname, rank, tag, logs ){
 
 		// value init
 		errorname = errorname || err;
@@ -202,13 +211,15 @@ var urqa_web = function( ){
 							'"eventpaths": [] '+
 						'},' +
 						'"console_log" : { '+
-							'"data" : "--" '+ // Android Console Log
+							'"data" : "'+ logs.join( '\\n' ).replace(/[\t]/g, '\\t').replace(/['"]/g, "") +'" '+ // Android Console Log
 						'}, ' + 
 						'"instance": { ' +
         					'"id": ' + utc_now.getTime() + ' ' +
     					'},' +
     					'"version": "0.95" '+
 					 '}';
+
+		console.loglog( reqobj );
 
 		callUrQA( url, reqobj );
 	};

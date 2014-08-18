@@ -11,20 +11,27 @@
 	<script type="text/javascript" src="lib/urqa/dateformat.js" ></script>
 	<script type="text/javascript" src="lib/urqa/urqa_core.js" ></script>
 	<script type="text/javascript" src="lib/urqa/urqa_web.js" ></script>
+	<script type="text/javascript" src="lib/console/console.js" ></script>
 </head>
 <body>
 	<div>
 		<p>
-			<a onclick="test_sendexception()">hello</a>
+			<a onclick="test_sendexception()">hello</a>			
+		</p>
+		<p>
+			<a onclick="add_log()">add log</a>			
 		</p>
 	</div>
+
 
 	<script type="text/javascript" >
 
 		// Init urqa
-		urqa.Init( { api_key: '10Eb2BF7', app_version:"1.1", wrap_url:'/urqa_wrapper'} );
+		urqa.Init( { api_key: '10Eb2BF7', app_version:"1.1", wrap_url:'/urqa_wrapper', console_debug_enable: true } );
 
+		console.log( "start...");
 		function test_sendexception(){
+			console.log( "called test_sendexception --- 1");
 			try{
 
 				var test = null;
@@ -35,8 +42,23 @@
 				urqa.send_e( err, { errname: "hhh test error", rank : 0,  tag: "ttttt" } );
 			}
 
+			console.log( "test_sendexception end... -- 2");
+
+			console.log( "global exception  --- 1");
+
 			test.aaa();
+
+			console.log( "global exception end... -- 2");
 		}
+
+		var log_test_cnt = 0;
+		function add_log(){
+
+			console.log( log_test_cnt );
+			++ log_test_cnt;
+
+		}
+
 	</script>
 </body>
 
