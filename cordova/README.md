@@ -7,7 +7,9 @@ Urqa-Cordova-Plugin V 0.1
 
 ## copy to project ( work on UrQA-Client-Javascript folder )
 
-install_cordova.sh [project root]
+install_cordova.sh [project root] [version]
+
+    : version is release version ( check release folder and folder name is version ( ex> 0.0.2 ) )
 
 ## write plugin code to ./config.xml  
 
