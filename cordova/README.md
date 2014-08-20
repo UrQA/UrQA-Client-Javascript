@@ -41,9 +41,9 @@ install_cordova.sh [project root]
 ```html
 <script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
-<script type="text/javascript" src="js/stacktrace/stacktrace.js"></script>
-<script type="text/javascript" src="js/urqa/urqa_core.js"></script>
-<script type="text/javascript" src="js/urqa/urqa_cordova.js"></script>
+
+<!-- check your cordova version -->
+<script type="text/javascript" src="js/urqa-cordova-0.0.2.js"></script> 
 
 <script type="text/javascript">
 

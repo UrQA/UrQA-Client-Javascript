@@ -1,0 +1,12 @@
+{
+  "name": "urqa-javascript-builder",
+  "private": true,
+  "version": "0.0.1",
+  "description": "UrQA for WEB Test builder",
+  "author": "Seo ByeongSeon <famersbs@gmail.com>",
+  "dependencies": {
+    "dateformat":"",
+    "node-minify":"",
+    "mkdirp":""
+  }
+}

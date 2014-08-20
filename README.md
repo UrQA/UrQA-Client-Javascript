@@ -11,8 +11,20 @@ UrQA Client Javascript
         : Cordova UrQA Client Plugin
 
     node_urqa_jsonp_wrapper
-        : UrQA Server Wrapper ( support jsonp )
+        : UrQA Server Wrapper ( support jsonp, nodejs )
 
+    release_app
+    	: build script ( nodejs )
+
+    release
+    	: release result folder
+
+
+# how to build
+
+	1) install node and npm
+	2) run build.sh
+	3) check release folder
 
 # javascript Function ( common )
 

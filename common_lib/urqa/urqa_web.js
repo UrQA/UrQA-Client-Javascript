@@ -142,7 +142,7 @@ var urqa_web = function( ){
 			        		session_key = jQuery.parseJSON(data).idsession;
 			        		//console.log( "it's a get datasession " +  );
 			        	}
-			            console.log( data );
+			            //console.log( data );
 			        }
 			    }
 			});
@@ -219,7 +219,7 @@ var urqa_web = function( ){
     					'"version": "0.95" '+
 					 '}';
 
-		console.loglog( reqobj );
+		//console.loglog( reqobj );
 
 		callUrQA( url, reqobj );
 	};

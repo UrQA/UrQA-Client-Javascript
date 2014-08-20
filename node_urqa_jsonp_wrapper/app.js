@@ -6,6 +6,7 @@ var server = express(); // better instead
 
 server.configure(function(){
 	server.use("/lib", express.static(__dirname + '/../common_lib'));
+	server.use("/lib_min", express.static(__dirname + '/../release'));
 	server.use(express.static(__dirname + '/public'));
 	server.set("jsonp callback", true);
     server.use(express.bodyParser());
