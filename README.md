@@ -13,7 +13,7 @@ UrQA Client Javascript
     node_urqa_jsonp_wrapper
         : UrQA Server Wrapper ( support jsonp, nodejs )
 
-    release_app
+    build_script
     	: build script ( nodejs )
 
     release

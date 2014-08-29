@@ -1,7 +1,7 @@
-Urqa-Cordova-Plugin
+Urqa-TizenWEB-Plugin
 ===================
 
-Urqa-Cordova-Plugin V 0.1
+Urqa-TizenWEB-Plugin V 0.1
 
 # Menual Install
 
@@ -10,6 +10,13 @@ Urqa-Cordova-Plugin V 0.1
 install_tizen_web.sh [project root] [version]
 
     : version is release version ( check release folder and folder name is version ( ex> 0.0.2 ) )
+
+# adding privilage
+
+    config.xml
+'''xml
+    <tizen:content-security-policy>allow '*'; media-src *; img-src *;</tizen:content-security-policy>
+'''
 
 # Sample index.html
 
