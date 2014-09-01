@@ -1123,6 +1123,25 @@ var createUrqa_cordova = function(){
 
 	ret_obj.exec = cordova.require('cordova/exec'); 
 
+	ret_obj.Init = function( init_value ){
+
+		// add global event
+		var before_onerror = window.onerror;
+		window.onerror = function(exception, url, line, column, errorobj) {
+
+    		urqa.send_e( exception, { errname: "" + errorobj }  );
+
+			try{
+				if( undefined != before_onerror && null == before_onerror ){
+					return before_onerror( exception, url, line, column, errobj );
+				}
+			}catch(err){}
+
+		    return false;
+		};
+
+	}
+
 
 	/**
 	 * thorow exception 
@@ -1140,11 +1159,11 @@ var createUrqa_cordova = function(){
 	        function(error){ 
 	        	//writelog("error");
 	        }, 
-	        "UrqaPlugin", "exception", [ 'Exception', 
-	        								  error, 
-	        								  additional_info.errname,
-	        								  additional_info.rank,
-	        								  additional_info.tag ] );
+	        "UrqaPlugin", "exception", [  additional_info.errname, 
+        								  error, 
+        								  additional_info.errname,
+        								  additional_info.rank,
+        								  additional_info.tag ] );
 	};
 
 	/**
@@ -1165,10 +1184,10 @@ var createUrqa_cordova = function(){
 	        	//writelog("error");
 	        }, 
 	        "UrqaPlugin", "exception", [ log_text, 
-	        								  trace, 
-	        								  additional_info.errname,
-	        								  additional_info.rank,
-	        								  additional_info.tag ] );
+        								  trace, 
+        								  additional_info.errname,
+        								  additional_info.rank,
+        								  additional_info.tag ] );
 
 	}
 
