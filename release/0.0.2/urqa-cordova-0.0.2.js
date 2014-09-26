@@ -495,6 +495,11 @@
 * MIT License | (c) Dustin Diaz 2014
 */
 
+/**
+ * get Browser Type
+ * 
+ * @return {object} browser information
+ */
 var getBrowser = function() {
     /**
      * See useragents.js for examples of navigator.userAgent
@@ -708,6 +713,11 @@ var getBrowser = function() {
  * The mask defaults to dateFormat.masks.default.
  */
 
+/**
+ * javascript 객체에는 날짜 format을 쉽게 할 수 없어 Date객체를 재 정의 하여, format함수를 사용할 수 있도록 함 
+ *
+ * @return {function} wrapping function
+ */
 var dateFormat = function () {
     var token = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g,
         timezone = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g,
@@ -719,7 +729,15 @@ var dateFormat = function () {
             return val;
         };
 
-    // Regexes and supporting functions are cached through closure
+    /**
+     * Regexes and supporting functions are cached through closure
+     *
+     * @constructor
+     * @param  {Date} date current time
+     * @param  {String} mask format string
+     * @param  {Date} utc   utc time
+     * @return {String}      formatted string
+     */
     return function (date, mask, utc) {
         var dF = dateFormat;
 
@@ -815,11 +833,24 @@ dateFormat.i18n = {
     ]
 };
 
-// For convenience...
+/**
+ * For convenience...
+ */
 Date.prototype.format = function (mask, utc) {
     return dateFormat(this, mask, utc);
 };
-var urqa = function( ){
+
+var create_urqa_core = function( ){
+
+	/**
+	 * urqa core 
+	 * 
+	 * linked to urqa global object
+	 * 
+	 * @constructor
+	 * @type {Object}
+	 */
+	var urqa_core = {};
 
 	/**
 	 * Enviroment Object
@@ -830,22 +861,18 @@ var urqa = function( ){
 	 * 	
 	 */
 	var env_obj = null;
-
 	var consoleLogObj = null;
-
-
-	var ret = {};
 
 	/**
 	 * Inittialize value
 	 * 
-	 * @param {[type]} init_value [description]
+	 * @param {object} init_value [description]
 	 *        .api_key		= api key ( common )
 	 *        .app_version 	= app version ( common )
 	 *        .wrap_url		= wrap url ( web )
 	 *        .console_debug_enable = ( web )
 	 */
-	ret.Init = function( init_value ){
+	urqa_core.Init = function( init_value ){
 		env_obj.Init( init_value );
 
 		if(init_value.console_debug_enable){
@@ -855,8 +882,10 @@ var urqa = function( ){
 
 	/**
 	 * set Enviroment Object
+	 *
+	 * @param {object} _env_obj environment object setting
 	 */
-	ret.setEnvObj = function( _env_obj ){
+	urqa_core.setEnvObj = function( _env_obj ){
 		env_obj = _env_obj;
 		// check ~!
 	};
@@ -867,9 +896,9 @@ var urqa = function( ){
 	 *
 	 * log memoryer
 	 * 
-	 * @param {[type]} _console_obj [description]
+	 * @param {object} _console_obj console control object setting
 	 */
-	ret.setConsoleLogObj = function( _console_obj ){
+	urqa_core.setConsoleLogObj = function( _console_obj ){
 		consoleLogObj = _console_obj;
 	};
 
@@ -881,7 +910,7 @@ var urqa = function( ){
 	 * @param  {object} additional_info  { errname:string, rank:int, tag:string }
 	 * @return {none}
 	 */
-	ret.send_e = function( error, additional_info ){
+	urqa_core.send_e = function( error, additional_info ){
 
 		if( null == env_obj){
 			alert( "Environment object is null" );
@@ -906,7 +935,7 @@ var urqa = function( ){
 	 * @param  {object} additional_info [description]
 	 * @return {none}                 
 	 */
-	ret.send_l = function( log_text, additional_info ){
+	urqa_core.send_l = function( log_text, additional_info ){
 
 		if( null == env_obj){
 			alert( "Environment object is null" );
@@ -931,8 +960,8 @@ var urqa = function( ){
 	 * 
 	 * setting additional_info default value
 	 * 
-	 * @param  {[type]} additional_info [description]
-	 * @return {[type]}                 [description]
+	 * @param  {object} additional_info 
+	 * @return {object}                 
 	 */
 	function process_additional_info( additional_info ){
 		
@@ -978,14 +1007,28 @@ var urqa = function( ){
 	} 
 
 
-	return ret;
+	return urqa_core;
 
-}();
-(function(){
+};
+
+/**
+ *
+ * core module
+ *
+ * user code interface
+ *
+ * linked to urqa_core object
+ * 
+ * @return {object} [description]
+ */
+var urqa = create_urqa_core();
+/**
+ * Console Wrapper Create function
+ */
+var console_wrapper_create = function(){
 
 	var before_enabled 	= false;
 	var maxlogcnt 		= 5;
-	var ret = {};
 	var recent_logs = [];
 	var before_console = {
 		log :function(){},
@@ -994,11 +1037,19 @@ var urqa = function( ){
 		info : function(){}
 	};
 
+
+	/**
+	 * Console Log Wrapping Object
+	 * 
+	 * @constructor
+	 * @type {Object}
+	 */
+	var ConsoleLogWrapper = {};
+
 	/**
 	 * Log Pushing
-	 * @param  {[type]} type [description]
-	 * @param  {[type]} msg  [description]
-	 * @return {[type]}      [description]
+	 * @param  {string} type log type ( wran, info, log, err )
+	 * @param  {string} msg  log message
 	 */
 	var push_log = function( type, _arguments ){
 
@@ -1025,42 +1076,54 @@ var urqa = function( ){
 
 	};
 
-	ret.log = function( ){
+	/**
+	 * log 
+	 */
+	ConsoleLogWrapper.log = function( ){
 
 		push_log( "log", arguments );
 		//Function.prototype.apply.call( before_console.log, console, [arguments.toString()] );
 		Function.prototype.apply.call( before_console.log, console, arguments );
 	};
 
-	ret.warn = function( ){
+
+	/**
+	 * warn 
+	 */
+	ConsoleLogWrapper.warn = function( ){
 		push_log( "warn", arguments );
 		Function.prototype.apply.call( before_console.warn, console, arguments );
 	};
 	
-	ret.error = function( ){
+	/**
+	 * error
+	 */
+	ConsoleLogWrapper.error = function( ){
 		push_log( "error", arguments );
 		Function.prototype.apply.call( before_console.error, console, arguments );
 	};
 
-	ret.info = function(){
+	/**
+	 * info
+	 */
+	ConsoleLogWrapper.info = function(){
 		push_log( "info", arguments );
 		Function.prototype.apply.call( before_console.info, console, arguments );
 	};
 
 	/**
 	 * get recently logs
-	 * @return {[type]} [description]
+	 * @return {string array} stored logs
 	 */
-	ret.getLogs = function(){
+	ConsoleLogWrapper.getLogs = function(){
 		return recent_logs;
 	}
 
 
 	/**
 	 * Copy log object
-	 * @param  {[type]} src [description]
-	 * @param  {[type]} dst [description]
-	 * @return {[type]}     [description]
+	 * @param  {object} src console or console wrapper
+	 * @param  {[object]} dst console wrapper
 	 */
 	function logcopyer( src, dst ){
 		dst.log = src.log;
@@ -1069,8 +1132,12 @@ var urqa = function( ){
 		dst.info = src.info;
 	}
 
-	// initialize
-	ret.enable = function( enabled ){
+	/**
+	 * enable or disable function 
+	 * 
+	 * @param  {boolean} enabled true : enable, false : disable
+	 */
+	ConsoleLogWrapper.enable = function( enabled ){
 
 		console.loglog = console.log;
 
@@ -1114,16 +1181,32 @@ var urqa = function( ){
 	//console.error("test", 'aaaa', 1234 );
 	//console.info("test", 'aaaa', 1234 );
 
-})();
-// require   -   js/stacktrace.js 
-
+};
+console_wrapper_create();
+/**
+ *
+ * create cordova environment object
+ * 
+ * @return {object} cordova environment object
+ */
 var createUrqa_cordova = function(){
 
-	var ret_obj = new Object();
+	/**
+	 * cordova_environment_object
+	 *
+	 * @constructor
+	 * @type {Object}
+	 */
+	var cordova_environment_obj = new Object();
 
 	ret_obj.exec = cordova.require('cordova/exec'); 
 
-	ret_obj.Init = function( init_value ){
+	/**
+	 * Initialize cordova environment object 
+	 * 
+	 * @param {object} init_value json object
+	 */
+	cordova_environment_obj.Init = function( init_value ){
 
 		// add global event
 		var before_onerror = window.onerror;
@@ -1150,7 +1233,7 @@ var createUrqa_cordova = function(){
 	 * @param  {object} additional_info  { errname:string, rank:int, tag:string }
 	 * @return {none}
 	 */
-	ret_obj.send_e = function( error, additional_info ){
+	cordova_environment_obj.send_e = function( error, additional_info ){
 
 		this.exec( 
 	        function(result){ 
@@ -1174,7 +1257,7 @@ var createUrqa_cordova = function(){
 	 * @param  {object} additional_info [description]
 	 * @return {none}                 
 	 */
-	ret_obj.send_l = function( log_text, trace, additional_info ){
+	cordova_environment_obj.send_l = function( log_text, trace, additional_info ){
 
 		this.exec( 
 	        function(result){ 

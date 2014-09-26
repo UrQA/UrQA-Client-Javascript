@@ -6,3 +6,4 @@ sudo node app.js
 
 cd ..
 
+./genjsdoc.sh
