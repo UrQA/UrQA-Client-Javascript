@@ -10,6 +10,7 @@ VERSION="`cat version`"
 
 echo "UrQA-Client-Javascript Document Create Ver :" $VERSION
 
-sudo jsdoc -c jsdoc_conf.json -d release/$VERSION/docs
+sudo jsdoc -c jsdoc_conf.json -d release/$VERSION/docs ./README.md
 
 #firefox release/$VERSION/docs/index.html
+# 

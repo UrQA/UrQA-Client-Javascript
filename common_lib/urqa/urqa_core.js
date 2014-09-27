@@ -24,7 +24,7 @@ var create_urqa_core = function( ){
 
 	/**
 	 * Inittialize value
-	 * 
+	 *
 	 * @param {object} init_value [description]
 	 *        .api_key		= api key ( common )
 	 *        .app_version 	= app version ( common )

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="utf-8">
-    <title>JSDoc: Index</title>
+    <title>UrQA Javascript Client- API documentation : Index</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -10,16 +10,30 @@
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
-</head>
+    <link href="styles/bootstrap.css" rel="stylesheet">
+    <link href="styles/docs.css" rel="stylesheet">
+    <link href="styles/bootstrap-custom.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <header class="header navbar navbar-inverse">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="brand" href="#"><strong>UrQA Javascript Client </strong> API documentation</a>
+        </div>
+      </div>
+    </header>
 
-<body>
+    <div class="container-fluid">
+      <div class="row-fluid">
+          <div class="span4">
+              <h2><a href="index.html">Index</a></h2><div class="well well-small"><ul class="nav nav-list"><li class="nav-header">Classes</li><li><a href="console_wrapper_create-ConsoleLogWrapper.html"><i class="icon-shield" style="color: #0186d1"></i> ConsoleLogWrapper</a></li><li><a href="create_urqa_core-urqa_core.html"><i class="icon-shield" style="color: #0186d1"></i> urqa_core</a></li><li><a href="createUrqa_cordova-cordova_environment_obj.html"><i class="icon-shield" style="color: #0186d1"></i> cordova_environment_obj</a></li><li><a href="createUrqa_web-web_environment_obj.html"><i class="icon-shield" style="color: #0186d1"></i> web_environment_obj</a></li></ul></div><div class="well well-small"><ul class="nav nav-list"><li class="nav-header">Global</li><li><a href="global.html#console_wrapper_create"><i class="icon-globe" style="color: black;"></i> console_wrapper_create</a></li><li><a href="global.html#createUrqa_cordova"><i class="icon-globe" style="color: black;"></i> createUrqa_cordova</a></li><li><a href="global.html#createUrqa_web"><i class="icon-globe" style="color: black;"></i> createUrqa_web</a></li><li><a href="global.html#dateFormat"><i class="icon-globe" style="color: black;"></i> dateFormat</a></li><li><a href="global.html#getBrowser"><i class="icon-globe" style="color: black;"></i> getBrowser</a></li><li><a href="global.html#urqa"><i class="icon-globe" style="color: black;"></i> urqa</a></li></ul></div>
+          </div>
 
-<div id="main">
-
-    <h1 class="page-title">Index</h1>
-
-    
+          <div class="span8">
+              <h1 class="page-header">Index</h1>
+              
 
 
     
@@ -40,24 +54,47 @@
 
 
 
+    <section>
+        <article><h1>UrQA Client Javascript </h1><h1>folder Descript</h1><pre class="prettyprint source"><code>common-lib
+    : Common javascript lib
+
+cordova
+    : Cordova UrQA Client Plugin
+
+node_urqa_jsonp_wrapper
+    : UrQA Server Wrapper ( support jsonp, nodejs )
+
+build_script
+    : build script ( nodejs )
+
+release
+    : release result folder</code></pre><h1>how to build</h1><pre class="prettyprint source"><code>1) install node and npm
+2) run build.sh
+3) check release folder</code></pre><h1>javascript Function ( common )</h1><pre class="prettyprint source"><code> * @param {[type]} init_value [description]</code></pre><h2>urqa.Init({ Json Object });</h2><pre class="prettyprint source"><code>api_key            = api key ( common )
+ app_version     = app version ( common )
+ wrap_url        = wrap url ( web )</code></pre><h2>urqa.send_e( error_text, { errname:string, rank:int ( -1 ~ 4 ) , tag:string } )</h2><pre class="prettyprint source"><code>exception send function</code></pre><h2>urqa.send_l( log_text, trace_text , { errname:string, rank:int ( -1 ~ 4 ), tag:string } )</h2><pre class="prettyprint source"><code>log send function</code></pre><h1>sample link</h1><pre class="prettyprint source"><code>cordova
+    : cordova
+
+web
+    : node_urqa_jsonp_wrapper/public/index.html</code></pre><h1>use open source</h1><p>browser.js         : https://github.com/ded/bowser
+Stacktrace.js     : http://stacktracejs.com/</p></article>
+    </section>
 
 
 
 
 
-</div>
 
-<nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="console_wrapper_create-ConsoleLogWrapper.html">ConsoleLogWrapper</a></li><li><a href="create_urqa_core-urqa_core.html">urqa_core</a></li><li><a href="createUrqa_cordova-cordova_environment_obj.html">cordova_environment_obj</a></li><li><a href="createUrqa_web-web_environment_obj.html">web_environment_obj</a></li></ul><h3>Global</h3><ul><li><a href="global.html#console_wrapper_create">console_wrapper_create</a></li><li><a href="global.html#createUrqa_cordova">createUrqa_cordova</a></li><li><a href="global.html#createUrqa_web">createUrqa_web</a></li><li><a href="global.html#dateFormat">dateFormat</a></li><li><a href="global.html#getBrowser">getBrowser</a></li><li><a href="global.html#urqa">urqa</a></li></ul>
-</nav>
+          </div>
+      </div>
 
-<br clear="both">
+        <br clear="both">
 
-<footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Fri Sep 26 2014 12:31:28 GMT+0900 (KST)
-</footer>
-
-<script> prettyPrint(); </script>
-<script src="scripts/linenumber.js"> </script>
-</body>
+      <footer>
+        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Sat Sep 27 2014 14:42:05 GMT+0900 (KST)
+        <br>
+      </footer>
+      <script> prettyPrint(); </script>
+    </div>
+  </body>
 </html>
